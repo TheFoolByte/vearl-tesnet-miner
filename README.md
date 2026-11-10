@@ -1,25 +1,25 @@
 # Vearl Miner Wrapper
 
-A thin Python (stdlib-only) wrapper around the **official Vearl testnet miner**.
-It downloads, SHA-256-verifies, runs and monitors the official binary — nothing else.
+Wrapper Python tipis (stdlib saja) untuk **miner testnet resmi Vearl**.
+Fungsinya mengunduh, memverifikasi SHA-256, menjalankan, dan memantau binary resmi — tidak lebih dari itu.
 
-## What it is / is NOT
+## Ini apa / bukan apa
 
-- ✅ It IS a helper: preflight checks, verified download, auto-restart, local dashboard.
-- ❌ It is NOT a miner. All mining / Proof-of-Useful-Work is done by the official
-  `vearl-miner` binary from `github.com/vearl-verified-compute/vearl`.
-- ❌ It does NOT scrape Pearl, does NOT reimplement mining, and does NOT mine on
-  your behalf anywhere. Vearl is not Pearl and Pearl has not endorsed it.
-- Testnet tokens have **no value** and cannot be sold or converted.
+- ✅ Ini adalah pembantu: pemeriksaan awal (preflight), unduhan terverifikasi, auto-restart, dashboard lokal.
+- ❌ Ini BUKAN miner. Semua mining / Proof-of-Useful-Work dilakukan oleh binary
+  resmi `vearl-miner` dari `github.com/vearl-verified-compute/vearl`.
+- ❌ Ini TIDAK men-scrape Pearl, TIDAK mengimplementasikan ulang mining, dan TIDAK
+  mining atas nama kamu di mana pun. Vearl bukan Pearl dan Pearl tidak pernah mendukungnya.
+- Token testnet **tidak ada nilainya** dan tidak bisa dijual atau ditukar.
 
-## Requirements
+## Syarat
 
-- NVIDIA GPU, Ampere generation or newer (RTX 30/40/50, A/L/H100, compute 8.0+),
-  Linux driver 575+ / Windows 580+, glibc 2.35+ (Ubuntu 22.04+).
-- Without a GPU the miner runs on CPU **very slowly** — testing only. It will
-  not realistically earn the 0.005% of total points needed for eligibility.
+- GPU NVIDIA, generasi Ampere atau lebih baru (RTX 30/40/50, A/L/H100, compute 8.0+),
+  driver Linux 575+ / Windows 580+, glibc 2.35+ (Ubuntu 22.04+).
+- Tanpa GPU, miner jalan di CPU **sangat lambat** — hanya untuk testing. Hampir
+  mustahil mencapai 0.005% dari total poin yang dibutuhkan untuk memenuhi syarat.
 
-## Quick start — laptop (Linux / Windows / Termux)
+## Mulai cepat — laptop (Linux / Windows / Termux)
 
 ```bash
 python3 run.py --check      # preflight: GPU, driver, disk, internet
@@ -27,132 +27,132 @@ python3 run.py --download   # fetch rc27 + verify SHA-256 + extract to ./vearl/
 python3 run.py              # run the miner (auto-restart, logs to miner.log)
 ```
 
-First run creates your wallet and shows **24 recovery words ONCE** — write them
-on paper. Never photograph them, never type them anywhere, never give them to
-anybody. This script never prints or logs them; only your public `vrl1...`
-address is ever shown.
+Jalan pertama membuat wallet kamu dan menampilkan **24 kata pemulihan SEKALI** — tulis
+di kertas. Jangan pernah memfotonya, jangan pernah mengetiknya di mana pun, jangan pernah
+memberikannya ke siapa pun. Script ini tidak pernah mencetak atau mencatatnya; hanya alamat
+publik `vrl1...` kamu yang pernah ditampilkan.
 
-Headless / VPS with an existing address (skips the wallet wizard, pool mode):
+Headless / VPS dengan alamat yang sudah ada (melewati wizard wallet, mode pool):
 
 ```bash
 python3 run.py --address vrl1xxxxxxxxxxxxxxxxxxxx
 ```
 
-In another terminal:
+Di terminal lain:
 
 ```bash
 python3 run.py --dashboard  # http://127.0.0.1:8080 — status, GPU, log, live points
 ```
 
-The dashboard is iOS-style: dark graphite, frosted-glass cards, big rounded
-corners, mobile-first. It has a segmented control for log lines (10 / 20 / 50)
-and a toggle switch for auto-refresh (every 15s). No purple anywhere — the
-palette is graphite + mint/teal/amber.
+Dashboard-nya gaya iOS: dark graphite, kartu frosted-glass, sudut membulat besar,
+mobile-first. Ada segmented control untuk jumlah baris log (10 / 20 / 50)
+dan toggle switch untuk auto-refresh (setiap 15 dtk). Tidak ada warna ungu sama sekali —
+paletnya graphite + mint/teal/amber.
 
-## Dashboard v2 — Home / Profile / Setup
+## Dashboard v2 — Beranda / Profil / Pengaturan
 
-`python3 run.py --dashboard` serves a local-only page on
-`http://127.0.0.1:8080` (never `0.0.0.0`). Tap the **☰** burger menu
-(top right) to switch pages — `?page=home|profile|setup`, server-rendered,
-no JS framework, only a tiny inline script for the menu and the copy button.
+`python3 run.py --dashboard` menyajikan halaman khusus lokal di
+`http://127.0.0.1:8080` (tidak pernah `0.0.0.0`). Ketuk menu burger **☰**
+(kanan atas) untuk pindah halaman — `?page=home|profile|setup`, di-render server,
+tanpa framework JS, hanya script inline kecil untuk menu dan tombol salin.
 
-- **Home** — the original status page: miner status, GPU, live points from
-  the official leaderboard, your address, log lines (10 / 20 / 50) and the
-  auto-refresh toggle (15 s).
-- **Setup** — the terminal actions as cards + buttons, no terminal needed:
-  1) preflight check, 2) download + SHA-256-verify the official miner,
-  3) create wallet / start miner in background, 4) register for rewards
-  (contact + optional print-only), 5) check registration status. Each
-  action shows its real output and exit code on the page. The banned-platform
-  gate still applies: nothing mines/downloads on Railway/Render/Colab/Kaggle
-  unless `I_UNDERSTAND_BANNED_PLATFORM=1`.
-- **Profile / Account** — public `vrl1...` address (copy button), points /
-  rank / active days / eligible, registration status, wallet file presence.
+- **Beranda** — halaman status aslinya: status miner, GPU, poin live dari
+  leaderboard resmi, alamat kamu, baris log (10 / 20 / 50), dan toggle
+  auto-refresh (15 dtk).
+- **Pengaturan** — aksi-aksi terminal dalam bentuk kartu + tombol, tanpa perlu terminal:
+  1) pemeriksaan awal, 2) unduh + verifikasi SHA-256 miner resmi,
+  3) buat wallet / jalankan miner di background, 4) daftar untuk hadiah
+  (kontak + opsi print-only), 5) cek status pendaftaran. Setiap
+  aksi menampilkan output asli dan exit code-nya di halaman. Gate platform
+  yang dilarang tetap berlaku: tidak ada mining/unduhan di Railway/Render/Colab/Kaggle
+  kecuali `I_UNDERSTAND_BANNED_PLATFORM=1`.
+- **Profil / Akun** — alamat publik `vrl1...` (tombol salin), poin /
+  peringkat / hari aktif / memenuhi syarat, status pendaftaran, keberadaan file wallet.
 
-The web dashboard UI is in **Bahasa Indonesia** (Beranda / Profil / Akun /
-Pengaturan); the terminal CLI output stays in English, and `?page=` values
-stay `home` / `profile` / `setup`.
+UI dashboard web berbahasa **Indonesia** (Beranda / Profil / Akun /
+Pengaturan); output CLI terminal tetap berbahasa Inggris, dan nilai `?page=`
+tetap `home` / `profile` / `setup`.
 
 ### Password dashboard — wajib masuk dulu
 
-Every dashboard page (`/?page=home|profile|setup`, `/api.json`, and all
-`/action/*` endpoints) requires a password. There is no anonymous access,
-even on localhost.
+Setiap halaman dashboard (`/?page=home|profile|setup`, `/api.json`, dan semua
+endpoint `/action/*`) wajib pakai password. Tidak ada akses anonim,
+bahkan di localhost.
 
-- **First run:** the dashboard shows a **Buat Password** page (password +
-  confirm, min. 8 characters). The password is stored ONLY as a salted
-  hash in `.dashboard-auth.json` (mode `0600`, git-ignored) — PBKDF2-HMAC-SHA256,
-  200,000 iterations — plus a random server secret for signing session
-  cookies. **The plaintext password is never stored anywhere, never logged.**
-- **Later visits:** a **Masuk** page asks for the password. A correct login
-  issues a session cookie (random 32-byte token, HMAC-signed with the
-  server secret, HttpOnly, SameSite=Lax, 12 hours). A wrong password gets a
-  generic "Password salah" and a 0.5 s delay. **Keluar** in the burger menu
-  logs out and clears the cookie.
-- **⚠️ Lupa password = terkunci selamanya.** There is no password recovery
-  and no password-change feature. The dashboard stays locked and the seed
-  vault cannot be opened again. Write the password down somewhere safe,
-  like the 24 words themselves.
+- **Jalan pertama:** dashboard menampilkan halaman **Buat Password** (password +
+  konfirmasi, min. 8 karakter). Password disimpan HANYA sebagai hash bersalt
+  di `.dashboard-auth.json` (mode `0600`, git-ignored) — PBKDF2-HMAC-SHA256,
+  200.000 iterasi — plus secret server acak untuk menandatangani cookie
+  sesi. **Password plaintext tidak pernah disimpan di mana pun, tidak pernah dicatat.**
+- **Kunjungan berikutnya:** halaman **Masuk** meminta password. Login yang benar
+  mengeluarkan cookie sesi (token acak 32-byte, ditandatangani HMAC dengan
+  secret server, HttpOnly, SameSite=Lax, 12 jam). Password yang salah mendapat
+  pesan generik "Password salah" dan jeda 0,5 dtk. **Keluar** di menu burger
+  akan logout dan menghapus cookie.
+- **⚠️ Lupa password = terkunci selamanya.** Tidak ada pemulihan password
+  dan tidak ada fitur ganti password. Dashboard tetap terkunci dan vault
+  seed tidak bisa dibuka lagi. Tulis password di tempat yang aman,
+  seperti 24 kata itu sendiri.
 
 <img src="docs/dashboard-login.png" alt="Vearl Miner login page — Masuk, password field, no-recovery warning" width="390">
 
 <img src="docs/dashboard.png" alt="Vearl Miner dashboard — iOS-style, dark graphite with mint/teal/amber" width="390">
 
-Screenshot above is the real dashboard rendered from the live server
-(`python3 run.py --dashboard`), captured on a test machine with no GPU —
-so it honestly shows `Stopped` / `No GPU` / `n/a` points until the miner
-runs on a GPU machine with a wallet.
+Screenshot di atas adalah dashboard asli yang di-render dari server live
+(`python3 run.py --dashboard`), diambil di mesin tes tanpa GPU —
+jadi jujur menampilkan `Stopped` / `No GPU` / `n/a` poin sampai miner
+dijalankan di mesin GPU dengan wallet.
 
 <img src="docs/dashboard-setup.png" alt="Vearl Miner Setup page — cards and buttons for check, download, start miner, register, check registration" width="390">
 
-### The 24 words — NOT stored by default
+### 24 kata — TIDAK disimpan secara default
 
-By default the dashboard does **not** store your recovery words anywhere.
-They were shown once, when the wallet was created — write them on paper.
-The Profile page says this plainly.
+Secara default dashboard **tidak** menyimpan kata-kata pemulihan kamu di mana pun.
+Kata-kata itu hanya ditampilkan sekali, saat wallet dibuat — tulis di kertas.
+Halaman Profil mengatakan ini dengan jelas.
 
-Opt-in only: you may paste the 24 words once into the Profile page. They
-are stored in `seed.vault` (mode `0600`, git-ignored), encrypted with a key
-derived from **your dashboard login password** (PBKDF2-HMAC-SHA256, 200,000
-iterations + a SHA-256 counter-mode stream cipher + HMAC tag, stdlib only).
-There is no separate vault passphrase anymore. After login, the Profile
-page shows the words with a small **Salin** copy button. The words are
-never logged, never in `/api.json`. **Warning: anyone with dashboard access
-*and* your password can steal the wallet — paper is still the safest
-backup, and forgetting the password locks the vault forever.** Delete the
-vault from the Profile page (login required).
+Hanya jika kamu mau (opt-in): kamu boleh menempel 24 kata sekali di halaman Profil.
+Kata-kata itu disimpan di `seed.vault` (mode `0600`, git-ignored), terenkripsi dengan kunci
+yang diturunkan dari **password login dashboard kamu** (PBKDF2-HMAC-SHA256, 200.000
+iterasi + stream cipher mode counter SHA-256 + HMAC tag, stdlib saja).
+Tidak ada lagi passphrase vault terpisah. Setelah login, halaman Profil
+menampilkan kata-kata itu dengan tombol kecil **Salin**. Kata-kata itu
+tidak pernah dicatat di log, tidak pernah ada di `/api.json`. **Peringatan: siapa pun yang punya akses dashboard
+*dan* password kamu bisa mencuri wallet — kertas tetap cadangan paling
+aman, dan lupa password mengunci vault selamanya.** Hapus vault dari
+halaman Profil (wajib login).
 
 ## Deploy
 
-| Platform | How | Status |
+| Platform | Cara | Status |
 |---|---|---|
-| Local laptop / PC (own GPU) | `python3 run.py` | ✅ Recommended |
-| GPU VPS — Docker | `docker compose up -d --build` | ✅ Recommended |
-| GPU VPS — systemd | `vearl-miner.service` | ✅ Recommended |
-| Railway | [Deploy on Railway](https://railway.app/new) with `deploy/railway.toml` | ❌ Banned — not recommended |
-| Render | [Render Blueprint](https://dashboard.render.com/new) with `deploy/render.yaml` | ❌ Banned — not recommended |
-| Google Colab | Open `deploy/colab.ipynb` in Colab | ❌ Banned — not recommended |
-| Kaggle | Open `deploy/kaggle.ipynb` in Kaggle | ❌ Banned — not recommended |
+| Laptop / PC lokal (GPU sendiri) | `python3 run.py` | ✅ Direkomendasikan |
+| GPU VPS — Docker | `docker compose up -d --build` | ✅ Direkomendasikan |
+| GPU VPS — systemd | `vearl-miner.service` | ✅ Direkomendasikan |
+| Railway | [Deploy on Railway](https://railway.app/new) dengan `deploy/railway.toml` | ❌ Dilarang — tidak direkomendasikan |
+| Render | [Render Blueprint](https://dashboard.render.com/new) dengan `deploy/render.yaml` | ❌ Dilarang — tidak direkomendasikan |
+| Google Colab | Buka `deploy/colab.ipynb` di Colab | ❌ Dilarang — tidak direkomendasikan |
+| Kaggle | Buka `deploy/kaggle.ipynb` di Kaggle | ❌ Dilarang — tidak direkomendasikan |
 
-The ❌ templates exist only so the repo shows every option (showcase). They
-carry a big warning in the file itself, and `run.py` refuses to mine on those
-platforms unless you set `I_UNDERSTAND_BANNED_PLATFORM=1`. Details in
-`deploy/README.md` — mining is banned there, accounts can be suspended or
-terminated, and there is no GPU anyway.
+Template ❌ ada hanya supaya repo menampilkan semua opsi (showcase). Di dalam
+file-nya ada peringatan besar, dan `run.py` menolak mining di platform itu
+kecuali kamu mengatur `I_UNDERSTAND_BANNED_PLATFORM=1`. Detail ada di
+`deploy/README.md` — mining dilarang di sana, akun bisa di-suspend atau
+di-terminate, dan lagipula tidak ada GPU.
 
-## Register for rewards
+## Daftar untuk hadiah
 
 ```bash
 python3 run.py --register --contact "YourDiscordName"
 # --print-only shows the signed lines without sending, if e-mail is blocked
 ```
 
-The official wallet signs the registration and sends it to `register@vearl.org`.
-Check your points at <https://vearl.org/leaderboard/> — you need 3+ active days
-and at least 0.005% of all points. Testnet 1 allocation: 0.7% of max supply,
-shared pro-rata by points.
+Wallet resmi menandatangani pendaftaran dan mengirimkannya ke `register@vearl.org`.
+Cek poin kamu di <https://vearl.org/leaderboard/> — kamu butuh 3+ hari aktif
+dan minimal 0.005% dari semua poin. Alokasi Testnet 1: 0.7% dari max supply,
+dibagi pro-rata berdasarkan poin.
 
-## GPU VPS (the only cloud option that makes sense)
+## GPU VPS (satu-satunya opsi cloud yang masuk akal)
 
 ```bash
 docker compose up -d --build   # needs an NVIDIA GPU + nvidia-container-toolkit
@@ -161,27 +161,27 @@ sudo cp vearl-miner.service /etc/systemd/system/
 sudo systemctl enable --now vearl-miner
 ```
 
-## ⚠️ Where NOT to deploy this
+## ⚠️ Jangan deploy di sini
 
-**Railway, Render, Google Colab and Kaggle all ban crypto mining.** Running this
-there will get the account/service suspended or terminated — Railway's AUP lists
-cryptocurrency mining as abuse, Render's AUP (item 7) explicitly bans it, and
-Colab/Kaggle ban it too. They also have no GPU, so it wouldn't earn points
-anyway. The `deploy/` templates for those platforms exist only as a showcase
-of every option, each carrying a big warning, and `run.py` refuses to mine on
-them unless you set `I_UNDERSTAND_BANNED_PLATFORM=1`.
-Use a GPU VPS you rent (e.g. an RTX 3090 on a GPU marketplace) or your own GPU.
+**Railway, Render, Google Colab dan Kaggle semuanya melarang crypto mining.** Menjalankan
+ini di sana akan membuat akun/layanan di-suspend atau di-terminate — AUP Railway
+menyebut cryptocurrency mining sebagai penyalahgunaan, AUP Render (item 7) secara eksplisit
+melarangnya, dan Colab/Kaggle juga melarangnya. Mereka juga tidak punya GPU, jadi
+tidak akan menghasilkan poin juga. Template `deploy/` untuk platform itu ada hanya
+sebagai showcase semua opsi, masing-masing membawa peringatan besar, dan `run.py`
+menolak mining di sana kecuali kamu mengatur `I_UNDERSTAND_BANNED_PLATFORM=1`.
+Pakai GPU VPS yang kamu sewa (mis. RTX 3090 di marketplace GPU) atau GPU kamu sendiri.
 
-## Files
+## File
 
-| File | Purpose |
+| File | Tujuan |
 |---|---|
-| `run.py` | The wrapper (stdlib only, Linux + Windows + Termux) |
-| `Dockerfile`, `docker-compose.yml` | GPU VPS container |
-| `vearl-miner.service` | systemd unit for a VPS |
-| `TESTS.md` | What was tested here, and what was not |
+| `run.py` | Wrapper-nya (stdlib saja, Linux + Windows + Termux) |
+| `Dockerfile`, `docker-compose.yml` | Container GPU VPS |
+| `vearl-miner.service` | Unit systemd untuk VPS |
+| `TESTS.md` | Apa yang sudah dites di sini, dan apa yang belum |
 
-## Env vars
+## Variabel env
 
 `VEALR_VERSION` (default `0.1.0-rc27`), `VEALR_DIR` (default `./vearl`),
-`DASHBOARD_PORT` (default `8080`). No secrets in code, ever.
+`DASHBOARD_PORT` (default `8080`). Tidak ada secret di dalam kode, selamanya.
