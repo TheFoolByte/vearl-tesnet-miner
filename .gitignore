@@ -1,0 +1,12 @@
+# Official binary + wallet — downloaded at runtime, never committed.
+vearl/
+# Miner output and caches.
+*.log
+.miner.pid
+.leaderboard-cache.json
+.download/
+# NEVER commit these. The wallet + recovery words are the only backup.
+wallet.json
+miner.json
+data/
+__pycache__/

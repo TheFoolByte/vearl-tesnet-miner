@@ -1,0 +1,22 @@
+# Vearl miner — GPU VPS ONLY.
+# Do NOT install on Railway / Render / Colab / Kaggle (mining is banned there).
+# Install: sudo cp vearl-miner.service /etc/systemd/system/
+#          sudo systemctl enable --now vearl-miner
+[Unit]
+Description=Vearl testnet miner (official binary, wrapped by run.py)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Runs as root when enabled with sudo. To run as your own user instead,
+# add: User=<your-username>  and point WorkingDirectory below at your copy.
+WorkingDirectory=/opt/vearl-miner
+ExecStart=/usr/bin/python3 /opt/vearl-miner/run.py
+Restart=always
+RestartSec=30
+StandardOutput=append:/opt/vearl-miner/miner.log
+StandardError=append:/opt/vearl-miner/miner.log
+
+[Install]
+WantedBy=multi-user.target

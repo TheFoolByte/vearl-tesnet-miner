@@ -1,0 +1,29 @@
+# =====================================================================
+# WARNING — READ THIS FIRST. DO NOT SKIP.
+#
+# CRYPTO MINING IS BANNED ON RAILWAY.
+# Railway's Acceptable Use Policy lists "cryptocurrency mining" as
+# abuse of the platform. Running this miner on Railway can get the
+# service removed/disabled and the account investigated.
+#
+# Railway also has NO GPU instances. Vearl mining needs an NVIDIA
+# Ampere+ GPU (RTX 30/40/50) — on Railway the miner would fall back
+# to CPU, run "very slowly" (Vearl's own words), and earn ~nothing.
+#
+# This template exists ONLY so the repo shows every deploy option.
+# It is NOT recommended. Use a GPU VPS instead (see ../README.md).
+#
+# run.py ALSO refuses to mine on Railway unless you explicitly set:
+#   I_UNDERSTAND_BANNED_PLATFORM=1
+# There is no stealth here: the service is openly named vearl-miner.
+# =====================================================================
+
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "python3 run.py"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+# Railway free trial is $5 credit — a 24/7 service burns through it
+# in ~6 days even before the mining ban is enforced. Do not use this.

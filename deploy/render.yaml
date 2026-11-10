@@ -1,0 +1,37 @@
+# =====================================================================
+# WARNING — READ THIS FIRST. DO NOT SKIP.
+#
+# CRYPTO MINING IS EXPLICITLY BANNED ON RENDER.
+# Render's Acceptable Use Policy, item 7, prohibits "use the Service
+# for cryptocurrency mining". Enforcement: warning, content takedown,
+# or SUSPENSION / TERMINATION of the account, at Render's discretion.
+#
+# Render also has NO GPU instances on any plan. Vearl mining needs an
+# NVIDIA Ampere+ GPU (RTX 30/40/50) — on Render the miner would fall
+# back to CPU, run "very slowly" (Vearl's own words), and earn ~nothing.
+# Free web services also spin down after 15 minutes idle, and there is
+# NO free background worker, so 24/7 mining is impossible on free tier.
+#
+# This blueprint exists ONLY so the repo shows every deploy option.
+# It is NOT recommended. Use a GPU VPS instead (see ../README.md).
+#
+# run.py ALSO refuses to mine on Render unless you explicitly set:
+#   I_UNDERSTAND_BANNED_PLATFORM=1
+# There is no stealth here: the service is openly named vearl-miner.
+# =====================================================================
+
+services:
+  # A worker is the honest service type for a miner (no inbound port).
+  # It needs a PAID compute plan (from $7/mo, 0.5 CPU) — free tier
+  # does not support workers at all.
+  - type: worker
+    name: vearl-miner
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: VEALR_VERSION
+        value: 0.1.0-rc27
+      # DO NOT set I_UNDERSTAND_BANNED_PLATFORM here unless you have
+      # read the warning above and accept the suspension risk.
+      # - key: I_UNDERSTAND_BANNED_PLATFORM
+      #   value: "1"

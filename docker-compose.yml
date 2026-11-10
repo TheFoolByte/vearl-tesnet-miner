@@ -1,0 +1,18 @@
+# GPU VPS ONLY. Do NOT deploy to Railway / Render / Colab / Kaggle —
+# they ban crypto mining and have no GPU. See README.md.
+services:
+  vearl-miner:
+    build: .
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - VEALR_VERSION=0.1.0-rc27
+    volumes:
+      - vearl-data:/app/vearl
+      - ./miner.log:/app/miner.log
+    # Dashboard is a separate command (python3 run.py --dashboard);
+    # run it over an SSH tunnel, never exposed to the public internet.
+    restart: unless-stopped
+
+volumes:
+  vearl-data:
